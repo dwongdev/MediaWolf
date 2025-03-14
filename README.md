@@ -18,7 +18,7 @@ Contributions are welcome from anyone who wants to help shape the project! Here�
 
 **Note:** Be sure to check out [TheWicklowWolf](https://github.com/TheWicklowWolf) for reference and proof of concepts — it will serve as a guide for formats,docker builds, actions and overall structure/style.  
 
-Thanks for your interest — let’s build something great together! 🚀  
+Thanks for your interest! 🚀  
 
 
 ## **🌍 Proposed Project Features:**
