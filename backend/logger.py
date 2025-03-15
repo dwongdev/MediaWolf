@@ -1,5 +1,6 @@
 import sys
 
+from loguru import logger
 from services.config_services import LOG_FILE_NAME
 
 
@@ -44,4 +45,4 @@ class CustomLogger:
         self.logger.warning(message)
 
 
-logger = CustomLogger()
+CustomLogger()

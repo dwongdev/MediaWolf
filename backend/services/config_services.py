@@ -3,7 +3,7 @@ import os
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List
 
-from logger import logger
+import logger
 
 LOG_FILE_NAME = "config/mediawolf_log.log"
 CONFIG_FILE_NAME = "config/mediawolf_settings.json"
