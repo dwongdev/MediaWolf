@@ -1,5 +1,5 @@
 import sys
-from loguru import logger
+
 from services.config_services import LOG_FILE_NAME
 
 
@@ -16,7 +16,13 @@ class CustomLogger:
         logger.remove()
         logger.add(sys.stdout, format="{time} - {level} - {message}", level=log_level)
         logger.add(sys.stderr, format="{time} - {level} - {message}", level="ERROR")
-        logger.add(log_file, format="{time} - {level} - {message}", level="DEBUG", rotation="10 MB", compression="zip")
+        logger.add(
+            log_file,
+            format="{time} - {level} - {message}",
+            level="DEBUG",
+            rotation="10 MB",
+            compression="zip",
+        )
         self.logger = logger
         self.log_level = log_level
 
