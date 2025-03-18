@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 from logger import logger
 
 LOG_FILE_NAME: str = "/config/mediawolf_log.log"
-DB_URL: str = "sqlite:///config/mediawolf_database.db"
+DB_URL: str = "sqlite:////config/mediawolf_database.db"
 
 
 @dataclass
