@@ -9,7 +9,7 @@ flask-socketio
 python-socketio
 unidecode
 apscheduler
-black==23.12.1
+black==24.3.0
 flake8==7.0.0
 flake8-docstrings==1.7.0
 isort==5.13.2
