@@ -104,6 +104,8 @@ MediaWolf/
 ├── docker/
 │   ├── .dockerignore
 │   ├── Dockerfile
+│   ├── gunicorn_config.py
+│   ├── init.sh
 │   └── requirements.txt
 ├── frontend/
 │   ├── static/
