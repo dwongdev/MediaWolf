@@ -10,14 +10,7 @@ music_bp = Blueprint("music", __name__)
 
 
 class MusicAPI:
-    def __init__(
-        self,
-        db: MusicDBHandler,
-        socketio: SocketIO,
-        lidarr_service: LidarrService,
-        spotify_service: SpotifyService,
-        spotdl_download_service: SpotDLDownloadService,
-    ):
+    def __init__(self, db: MusicDBHandler, socketio: SocketIO, lidarr_service: LidarrService, spotify_service: SpotifyService, spotdl_download_service: SpotDLDownloadService):
         self.db = db
         self.socketio = socketio
         self.lidarr_service = lidarr_service
@@ -50,10 +43,7 @@ class MusicAPI:
             if return_result.get("result") == "success":
                 self.socketio.emit("refresh_artist", return_result.get("item"))
             else:
-                self.socketio.emit(
-                    "new_toast_msg",
-                    {"title": "Failed to add Artist", "message": return_result.get("message")},
-                )
+                self.socketio.emit("new_toast_msg", {"title": "Failed to add Artist", "message": return_result.get("message")})
 
         @self.socketio.on("dismiss_artist")
         def handle_dismiss_artist(artist_name):
@@ -66,9 +56,7 @@ class MusicAPI:
         @self.socketio.on("search_spotify")
         def handle_spotify_search(query_req):
             if not query_req:
-                self.socketio.emit(
-                    "toast", {"title": "Blank Search Query", "body": "Please enter search request"}
-                )
+                self.socketio.emit("toast", {"title": "Blank Search Query", "body": "Please enter search request"})
                 parsed_results = {}
             else:
                 parsed_results = self.spotify_service.perform_spotify_search(query_req)
@@ -80,18 +68,18 @@ class MusicAPI:
 
         @self.socketio.on("spotdl_cancel_all")
         def handle_spotdl_cancel_all():
-            logger.info("Request to cancel all download recieved")
+            logger.info(f"Request to cancel all download recieved")
             self.spotdl_download_service.cancel_active_download()
             self.spotdl_download_service.cancel_pending_downloads()
 
         @self.socketio.on("spotdl_cancel_active")
         def handle_spotdl_cancel_active():
-            logger.info("Request to cancel active download recieved")
+            logger.info(f"Request to cancel active download recieved")
             self.spotdl_download_service.cancel_active_download()
 
         @self.socketio.on("get_wanted_albums_from_lidarr")
         def handle_get_wanted_albums_from_lidarre():
-            logger.info("Request to cancel active download recieved")
+            logger.info(f"Request to cancel active download recieved")
             self.lidarr_service.get_wanted_albums_from_lidarr()
 
     def get_blueprint(self):

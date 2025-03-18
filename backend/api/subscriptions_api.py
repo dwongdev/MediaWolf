@@ -1,15 +1,16 @@
 from flask import Blueprint, render_template
 from flask_socketio import SocketIO
 from logger import logger
+from services.config_services import Config
 from services.subscription_services import Subscriptions
 
 subscriptions_bp = Blueprint("subscriptions", __name__)
 
 
 class SubscriptionsAPI:
-    def __init__(self, socketio: SocketIO):
+    def __init__(self, socketio: SocketIO, config: Config):
         self.socketio = socketio
-        self.subscriptions = Subscriptions()
+        self.subscriptions = Subscriptions(config)
         self.setup_routes()
         self.setup_socket_events()
 
@@ -28,7 +29,8 @@ class SubscriptionsAPI:
         def handle_download_link():
             """Add Subscriptions."""
             try:
-                pass
+                subs = {}
+
             except Exception as e:
                 logger.error(f"Error with subscriptions: {str(e)}")
 

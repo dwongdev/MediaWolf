@@ -1,17 +1,45 @@
-FROM python:3.12-slim
 
-WORKDIR /app
+FROM python:3.12-alpine
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# Set arguments and env
+ARG release_version
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app/tubetube \
+    release_version=${release_version}
 
-# Copy requirements first to leverage Docker cache
-COPY docker/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Create User
+ARG puid=1000
+ARG pgid=1000
+RUN addgroup -g $pgid general_user && \
+    adduser -D -u $puid -G general_user -s /bin/sh general_user
 
-# Copy the rest of the application
-COPY . .
+# Create directories and set permissions
+COPY . /mediawolf
+WORKDIR /mediawolf
+RUN chown -R $puid:$pgid /mediawolf
 
-EXPOSE 5000 
+
+RUN apk update && apk add --no-cache su-exec
+
+# Install Firefox and Xvfb for web scraping
+# RUN apk --no-cache add \
+#    firefox \
+#    xvfb \ 
+#    ttf-freefont \
+#    fontconfig \
+#    dbus
+
+# Install requirements and run code
+RUN pip install --upgrade pip --root-user-action=ignore && \
+    pip install --no-cache-dir --root-user-action=ignore -r /mediawolf/docker/requirements.txt
+ENV PYTHONPATH="${PYTHONPATH}:/mediawolf/backend"
+
+# Make the script executable
+RUN chmod +x /mediawolf/docker/init.sh
+
+# Expose port
+EXPOSE 5000
+
+# Start the app
+ENTRYPOINT ["/mediawolf/docker/init.sh"]

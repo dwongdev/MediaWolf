@@ -1,7 +1,7 @@
 from db.music_models import Base
 from logger import logger
 from services.config_services import DB_URL
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 
 

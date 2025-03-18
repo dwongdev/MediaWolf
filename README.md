@@ -9,14 +9,14 @@ This project is still in the early stages of development and **is not yet ready 
 ### 💡 Getting Involved  
 
 Contributions are welcome from anyone who wants to help shape the project! Here’s how to jump in:  
-
-> **1. Fork the repo** – Pick a section you’d like to work on and submit a Pull Request (PR) when you’re ready.  
+ 
+> **1. Start a discussion** – Before diving in, use the repo's Discussions tab to share what you’re planning. This helps avoid overlap and keeps everyone on the same page.  
 >  
-> **2. Start a discussion** – Before diving in, use the repo's Discussions tab to share what you’re planning. This helps avoid overlap and keeps everyone on the same page.  
->  
-> **3. Recognition** – Contributors who handle a significant part of the work may be added as maintainers to help guide the project forward.  
+> **2. Create a Fork** – Fork the repository to create your own copy. Next, create a new branch within your fork for your changes. Push your branch so your progress is visible, and when you're ready, submit a Pull Request (PR).
+>
+> **3. Recognition** – Contributors who handle a significant part of the work will be added as maintainers of the project and the organisation to help guide the project forward.  
 
-**Note:** Be sure to check out [TheWicklowWolf](https://github.com/TheWicklowWolf) for reference and proof of concepts — it will serve as a guide for formats,docker builds, actions and overall structure/style.  
+**Note:** Be sure to check out [TheWicklowWolf](https://github.com/TheWicklowWolf) for reference and proof of concepts — it will serve as a guide for formats, docker builds, actions and overall structure/style.  
 
 Thanks for your interest! 🚀  
 

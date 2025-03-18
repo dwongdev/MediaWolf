@@ -16,15 +16,10 @@ class SpotifyService:
             search_type = "album,artist,playlist,track" if query_type == "all" else query_type
 
             logger.info(f"Search query: {query}, Type: {search_type}")
-            client_credentials_manager = SpotifyClientCredentials(
-                client_id=self.config.spotify_client_id,
-                client_secret=self.config.spotify_client_secret,
-            )
+            client_credentials_manager = SpotifyClientCredentials(client_id=self.config.spotify_client_id, client_secret=self.config.spotify_client_secret)
             self.sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-            results = self.sp.search(
-                q=query, limit=self.config.spotify_search_limit, type=search_type
-            )
+            results = self.sp.search(q=query, limit=self.config.spotify_search_limit, type=search_type)
             parsed_results = self.parse_spotify_data(results)
 
         except Exception as e:
@@ -46,9 +41,7 @@ class SpotifyService:
                         "artist": item["artists"][0]["name"],
                         "album": item["album"]["name"],
                         "url": item["external_urls"]["spotify"],
-                        "image": item["album"]["images"][0]["url"]
-                        if item["album"]["images"]
-                        else None,
+                        "image": item["album"]["images"][0]["url"] if item["album"]["images"] else None,
                     }
                 )
 

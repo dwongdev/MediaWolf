@@ -3,13 +3,13 @@ import os
 from dataclasses import asdict, dataclass
 from typing import Dict, Optional
 
+import logger
 from logger import logger
+from services.config_services import Config
 from services.lidarr_services import LidarrService
 from services.radarr_services import RadarrService
 from services.readarr_services import ReadarrService
 from services.sonarr_services import SonarrService
-
-TASKS_CONFIG_FILE_NAME = "config/mediawolf_tasks.json"
 
 
 @dataclass
@@ -25,27 +25,21 @@ class Task:
 
 
 class Tasks:
-    def __init__(
-        self,
-        lidarr_service: LidarrService,
-        radarr_service: RadarrService,
-        readarr_service: ReadarrService,
-        sonarr_service: SonarrService,
-    ):
+    def __init__(self, config: Config, lidarr_service: LidarrService, radarr_service: RadarrService, readarr_service: ReadarrService, sonarr_service: SonarrService):
         self.lidarr_service = lidarr_service
         self.radarr_service = radarr_service
         self.readarr_service = readarr_service
         self.sonarr_service = sonarr_service
-        self.config_file = TASKS_CONFIG_FILE_NAME
+        self.config = config
         self.tasks: Dict[str, Task] = {}
 
         self.load_tasks()
 
     def load_tasks(self):
         """Load tasks from the configuration file or create default tasks."""
-        if os.path.exists(self.config_file):
+        if os.path.exists(self.config.TASKS_CONFIG_FILE_NAME):
             try:
-                with open(self.config_file, "r") as f:
+                with open(self.config.TASKS_CONFIG_FILE_NAME, "r") as f:
                     tasks_data = json.load(f)
                     self.tasks = {task_id: Task(**data) for task_id, data in tasks_data.items()}
                     logger.info("Tasks successfully loaded from file.")
@@ -74,10 +68,8 @@ class Tasks:
     def save_tasks(self):
         """Save tasks to JSON file."""
         try:
-            with open(self.config_file, "w") as f:
-                json.dump(
-                    {task_id: task.to_dict() for task_id, task in self.tasks.items()}, f, indent=4
-                )
+            with open(self.config.TASKS_CONFIG_FILE_NAME, "w") as f:
+                json.dump({task_id: task.to_dict() for task_id, task in self.tasks.items()}, f, indent=4)
             logger.info("Tasks successfully saved.")
         except IOError as e:
             logger.error(f"Failed to save tasks: {e}")

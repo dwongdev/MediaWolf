@@ -26,7 +26,8 @@ class DownloadsAPI:
         def handle_download_link():
             """Adds link to download queue."""
             try:
-                pass
+                download = {}
+
             except Exception as e:
                 logger.error(f"Error with downloads: {str(e)}")
 

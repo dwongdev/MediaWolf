@@ -41,32 +41,18 @@ class MediaWolfApp:
         self.sonarr_service = SonarrService()
         self.radarr_service = RadarrService()
         self.readarr_service = ReadarrService()
-        self.spotdl_download_service = SpotDLDownloadService(
-            self.config, self.spotdl_download_history
-        )
+        self.spotdl_download_service = SpotDLDownloadService(self.config, self.spotdl_download_history)
         self.spotify_service = SpotifyService(self.config)
         self.readarr_service = ()
 
-        self.music_api = MusicAPI(
-            self.music_db,
-            self.socketio,
-            self.lidarr_service,
-            self.spotify_service,
-            self.spotdl_download_service,
-        )
+        self.music_api = MusicAPI(self.music_db, self.socketio, self.lidarr_service, self.spotify_service, self.spotdl_download_service)
         self.books_api = BooksAPI(self.music_db, self.socketio, self.readarr_service)
         self.movies_api = MoviesAPI(self.music_db, self.socketio, self.radarr_service)
         self.shows_api = ShowsAPI(self.music_db, self.socketio, self.sonarr_service)
         self.downloads_api = DownloadsAPI(self.socketio)
-        self.subscriptions_api = SubscriptionsAPI(self.socketio)
+        self.subscriptions_api = SubscriptionsAPI(self.socketio, self.config)
         self.settings_api = SettingsAPI(self.music_db, self.socketio, self.config)
-        self.tasks_api = TasksAPI(
-            self.socketio,
-            self.lidarr_service,
-            self.radarr_service,
-            self.readarr_service,
-            self.sonarr_service,
-        )
+        self.tasks_api = TasksAPI(self.socketio, self.config, self.lidarr_service, self.radarr_service, self.readarr_service, self.sonarr_service)
         self.logs_api = LogsAPI(self.socketio)
 
         self.add_routes()
@@ -105,11 +91,13 @@ class MediaWolfApp:
         """Run Flask app with SocketIO."""
         self.socketio.run(self.app, host=self.host, port=self.port)
 
+    def get_app(self):
+        return self.app
 
-# Create an instance of MediaWolfApp
+
 media_wolf_app = MediaWolfApp()
-# Expose the Flask application instance
-app = media_wolf_app.app
 
 if __name__ == "__main__":
     media_wolf_app.run()
+else:
+    app = media_wolf_app.get_app()

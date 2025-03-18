@@ -1,6 +1,8 @@
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 from flask import Blueprint, render_template
 from flask_socketio import SocketIO
+from services.config_services import Config
 from services.lidarr_services import LidarrService
 from services.radarr_services import RadarrService
 from services.readarr_services import ReadarrService
@@ -11,20 +13,11 @@ tasks_bp = Blueprint("tasks", __name__)
 
 
 class TasksAPI:
-    def __init__(
-        self,
-        socketio: SocketIO,
-        lidarr_service: LidarrService,
-        radarr_services: RadarrService,
-        readarr_services: ReadarrService,
-        sonarr_services: SonarrService,
-    ):
+    def __init__(self, socketio: SocketIO, config: Config, lidarr_service: LidarrService, radarr_services: RadarrService, readarr_services: ReadarrService, sonarr_services: SonarrService):
         self.socketio = socketio
         self.scheduler = BackgroundScheduler()
         self.scheduler.start()
-        self.tasks_manager = Tasks(
-            lidarr_service, radarr_services, readarr_services, sonarr_services
-        )
+        self.tasks_manager = Tasks(config, lidarr_service, radarr_services, readarr_services, sonarr_services)
         self.setup_routes()
         self.setup_socket_events()
 

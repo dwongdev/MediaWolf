@@ -3,19 +3,26 @@ import os
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List
 
-import logger
+from logger import logger
 
-LOG_FILE_NAME = "config/mediawolf_log.log"
-CONFIG_FILE_NAME = "config/mediawolf_settings.json"
-DB_URL = "sqlite:///config/mediawolf_database.db"
+LOG_FILE_NAME: str = "/config/mediawolf_log.log"
+DB_URL: str = "sqlite:///config/mediawolf_database.db"
 
 
 @dataclass
 class Config:
     """Configuration class for environment-based settings using dataclasses."""
 
+    # Class constants
+    CONFIG_FILE_NAME: str = "/config/mediawolf_settings.json"
+    TASKS_CONFIG_FILE_NAME: str = "/config/mediawolf_tasks.json"
+    SUBSCRIPTION_CONFIG_FILE_PATH: str = "/config/mediawolf_subs.json"
+
     # General Settings
     log_level: str = "INFO"
+    puid: int = 1000
+    pgid: int = 1000
+    release_version: str = "NA"
 
     # Last FM Settings
     lastfm_api_key: str = ""
@@ -74,9 +81,7 @@ class Config:
 
     # Output formatting
     track_output: str = "{artist}/{album} - ({year})/{artist} - {title}.{output-ext}"
-    album_output: str = (
-        "{artist}/{album} - ({year})/{artist} - {album} - {track-number} - {title}.{output-ext}"
-    )
+    album_output: str = "{artist}/{album} - ({year})/{artist} - {album} - {track-number} - {title}.{output-ext}"
     playlist_output: str = "{list-name}/{artist} - {title}.{output-ext}"
     artist_output: str = "{artist}/{album} - ({year})/{artist} - {title}.{output-ext}"
 
