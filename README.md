@@ -37,7 +37,7 @@ Thanks for your interest! 🚀
 ✅ Manual Search → Search via TMDB with option to add to Sonarr
 
 ## Music (Lidarr, LastFM, yt-dlp, Spotify)  
-✅ Manual Search → Search Spotify for music and download via spotDL (which uses yt-dlp)
+✅ Manual Search → Search Spotify for music and download via spotDL (which uses yt-dlp)  
 ✅ Recommendations → Generate artist recommendations from LastFM based on Lidarr library (with options to add or dismiss suggestions including filters and sorting)  
 ✅ Missing List → Read Lidarr library, fetch missing albums and download via yt-dlp  
 
