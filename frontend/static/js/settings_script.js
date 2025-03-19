@@ -1,6 +1,13 @@
-function initializeSettingsPage() {
-    document.getElementById("save-settings-button").addEventListener("click", (event) => {
-        event.preventDefault();
+import { socket } from './socket_script.js';
+
+export class SettingsPage {
+    init() {
+        document.getElementById("save-settings-button").addEventListener("click", (event) => {
+            event.preventDefault();
+            this.saveSettings();
+        });
+    }
+    saveSettings() {
         let formData = {};
         document.querySelectorAll("#settings-form input").forEach(input => {
             if (input.type === "number") {
@@ -10,10 +17,7 @@ function initializeSettingsPage() {
             }
         });
         socket.emit("save_settings", formData);
-    });
+    }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    initializeSettingsPage();
-});
 

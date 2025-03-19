@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="MediaWolf Media Search and Management">
         <title>MediaWolf</title>
-        <link rel="icon" type="image/png" href="{{url_for('static', filename='favicon.png')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='base_style.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='music_style.css')}}">
+        <link rel="icon" type="image/png" href="{{url_for('static', filename='assets/favicon.png')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base_style.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/music_style.css')}}">
         <!-- DOM Purify -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.3/purify.min.js"
                 integrity="sha512-Ll+TuDvrWDNNRnFFIM8dOiw7Go7dsHyxRp4RutiIFW/wm3DgDmCnRZow6AqbXnCbpWu93yM1O34q+4ggzGeXVA=="
@@ -156,10 +156,8 @@
         </div>
 
         <!-- Custom Javascript -->
-        <script src="{{ url_for('static', filename='base_script.js') }}"></script>
-        <script src="{{ url_for('static', filename='theme_script.js') }}"></script>
-        {% block scripts %}{% endblock %}
-
+        <script src="{{ url_for('static', filename='js/theme_script.js') }}"></script>
+        <script type="module" src="{{ url_for('static', filename='js/base_script.js') }}"></script>
 </body>
 
 </html>

@@ -10,7 +10,7 @@
     <a class="btn btn-outline-secondary" id="pills-music-recommendations-tab" data-bs-toggle="pill"
         href="#pills-music-recommendations" role="tab" aria-controls="pills-music-recommendations"
         aria-selected="false">Recommendations</a>
-    <a class="btn btn-outline-secondary" id="pills-lidarr-wanted-tab" data-bs-toggle="pill" href="#pills-lidarr-wanted"
+    <a class="btn btn-outline-secondary" id="pills-music-lidarr-tab" data-bs-toggle="pill" href="#pills-lidarr-wanted"
         role="tab" aria-controls="pills-lidarr-wanted" aria-selected="false">Lidarr Wanted</a>
 </div>
 
@@ -104,7 +104,7 @@
                         <div class="card-body d-flex flex-column">
                             <div class="row">
                                 <div class="col-auto">
-                                    <img src="{{url_for('static', filename='lidarr.svg')}}" alt="Logo"
+                                    <img src="{{url_for('static', filename='assets/lidarr.svg')}}" alt="Logo"
                                         class="logo img-fluid" style="width: 50px; height: auto;">
                                 </div>
                                 <div class="col-auto d-flex align-items-center justify-content-start p-0">
@@ -153,7 +153,7 @@
                         <div class="card-body d-flex flex-column">
                             <div class="row">
                                 <div class="col-auto">
-                                    <img src="{{url_for('static', filename='yt_dlp.png')}}" alt="Logo"
+                                    <img src="{{url_for('static', filename='assets/yt_dlp.png')}}" alt="Logo"
                                         class="logo img-fluid" style="width: 50px; height: auto;">
                                 </div>
                                 <div class="col-auto d-flex align-items-center justify-content-start p-0">
@@ -288,7 +288,7 @@
 </template>
 
 <!-- Bio Modal -->
-<div class="modal fade" id="bio-modal-modal" tabindex="-1" aria-labelledby="bio-modal-title" aria-hidden="true">
+<div class="modal fade" id="bio-modal" tabindex="-1" aria-labelledby="bio-modal-title" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -316,8 +316,4 @@
         <div class="toast-body"></div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="{{ url_for('static', filename='music_script.js') }}" defer></script>
 {% endblock %}
