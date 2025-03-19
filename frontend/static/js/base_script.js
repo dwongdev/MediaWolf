@@ -1,104 +1,111 @@
-const socket = io();
+import { socket } from './socket_script.js';
+import { MusicPage } from './music_script.js';
+import { MoviesPage } from './movies_script.js';
+import { LogsPage } from './logs_script.js';
+import { SettingsPage } from './settings_script.js';
+import { SubscriptionsPage } from './subscriptions_script.js';
+import { TasksPage } from './tasks_script.js';
 
-document.addEventListener('DOMContentLoaded', function () {
+class BasePage {
+    constructor() {
+        this.mainContent = document.querySelector('main');
+        this.sidebarLinks = document.querySelectorAll('.sidebar-nav-item');
+        this.pageInstances = {};
 
-    const sidebarLinks = document.querySelectorAll('.sidebar-nav-item');
-    const mainContent = document.querySelector('main');
+        this.setupSidebar();
+    }
 
-    const currentPage = window.location.pathname.split('/')[1];
-    sidebarLinks.forEach(link => {
-        const page = link.getAttribute('data-page');
-        if (page === currentPage || (currentPage === '' && page === 'music')) {
-            link.classList.add('active');
-            if (currentPage == 'music' || (currentPage === '' && page === 'music')) {
-                initializeMusicPage();
-            }
-        } else {
-            link.classList.remove('active');
-        }
-    });
+    setupSidebar() {
+        const currentPage = window.location.pathname.split('/')[1] || 'music';
 
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
+        this.sidebarLinks.forEach(link => {
+            const page = link.getAttribute('data-page');
+            link.classList.toggle('active', page === currentPage);
 
-            const page = event.target.getAttribute('data-page');
-
-            sidebarLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            link.classList.add('active');
-            window.history.pushState({}, '', `/${page}`);
-
-            fetch(`/${page}`)
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const content = doc.querySelector('main').innerHTML;
-                    mainContent.innerHTML = '';
-                    mainContent.innerHTML = content;
-
-                    const newScripts = doc.querySelectorAll('script');
-                    const loadScriptPromises = [];
-
-                    newScripts.forEach(oldScript => {
-                        const scriptExists = Array.from(document.querySelectorAll('script')).some(script => script.src === oldScript.src);
-                        if (!scriptExists && oldScript.src) {
-                            const newScript = document.createElement('script');
-                            newScript.src = oldScript.src;
-                            newScript.defer = true;
-                            const scriptLoadPromise = new Promise((resolve, reject) => {
-                                newScript.onload = resolve;
-                                newScript.onerror = reject;
-                            });
-                            document.body.appendChild(newScript);
-                            loadScriptPromises.push(scriptLoadPromise);
-                        }
-                    });
-                    Promise.all(loadScriptPromises)
-                        .then(() => {
-                            if (page === 'music' && typeof initializeMusicPage === 'function') {
-                                initializeMusicPage();
-                            } else if (page === 'subscriptions' && typeof initializeSubscriptionsPage === 'function') {
-                                initializeSubscriptionsPage();
-                            } else if (page === 'tasks' && typeof initializeTasksPage === 'function') {
-                                initializeTasksPage();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error loading scripts:', error);
-                            mainContent.innerHTML = '<p>Sorry, something went wrong. Please try again later.</p>';
-                        });
-                })
-                .catch(error => {
-                    console.error('Error fetching page content:', error);
-                    mainContent.innerHTML = '<p>Sorry, something went wrong. Please try again later.</p>';
-                });
+            link.addEventListener('click', (event) => this.handlePageChange(event, page));
         });
-    });
 
-});
+        this.loadPage(currentPage);
+    }
 
-function showToast(header, message) {
-    var toastContainer = document.querySelector('.toast-container');
-    var toastTemplate = document.getElementById('toast-template').cloneNode(true);
-    toastTemplate.classList.remove('d-none');
+    handlePageChange(event, page) {
+        event.preventDefault();
+        window.history.pushState({}, '', `/${page}`);
 
-    toastTemplate.querySelector('.toast-header strong').textContent = header;
-    toastTemplate.querySelector('.toast-body').textContent = message;
-    toastTemplate.querySelector('.text-muted').textContent = new Date().toLocaleString();
+        this.sidebarLinks.forEach(link => link.classList.remove('active'));
+        event.target.classList.add('active');
 
-    toastContainer.appendChild(toastTemplate);
+        this.loadPage(page);
+    }
 
-    var toast = new bootstrap.Toast(toastTemplate);
-    toast.show();
+    async loadPage(page) {
+        try {
+            const response = await fetch(`/${page}`);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
 
-    toastTemplate.addEventListener('hidden.bs.toast', function () {
-        toastTemplate.remove();
-    });
+            this.mainContent.innerHTML = doc.querySelector('main').innerHTML;
+
+            this.initPage(page);
+
+        } catch (error) {
+            console.error('Error loading page:', error);
+            this.mainContent.innerHTML = '<p>Failed to load page. Please try again.</p>';
+        }
+    }
+
+    initPage(page) {
+        if (!this.pageInstances[page]) {
+            if (page === 'music') {
+                this.pageInstances.music = new MusicPage();
+            } else if (page === 'movies') {
+                this.pageInstances.movies = new MoviesPage();
+            } else if (page === 'logs') {
+                this.pageInstances.logs = new LogsPage();
+            } else if (page === 'settings') {
+                this.pageInstances.settings = new SettingsPage();
+            } else if (page === 'subscriptions') {
+                this.pageInstances.subscriptions = new SubscriptionsPage();
+            } else if (page === 'tasks') {
+                this.pageInstances.tasks = new TasksPage();
+            }
+        }
+
+        if (this.pageInstances[page]) {
+            this.pageInstances[page].init();
+        }
+    }
+
+
 }
 
-socket.on("new_toast_msg", function (data) {
-    showToast(data.title, data.message);
-});
+class Toaster {
+    constructor() {
+        socket.on("new_toast_msg", (data) => this.createToastMessage(data.title, data.message));
+    }
+
+    createToastMessage(header, message) {
+        const toastContainer = document.querySelector('.toast-container');
+        const toastTemplate = document.getElementById('toast-template').cloneNode(true);
+        toastTemplate.classList.remove('d-none');
+
+        toastTemplate.querySelector('.toast-header strong').textContent = header;
+        toastTemplate.querySelector('.toast-body').textContent = message;
+        toastTemplate.querySelector('.text-muted').textContent = new Date().toLocaleString();
+
+        toastContainer.appendChild(toastTemplate);
+
+        const toast = new bootstrap.Toast(toastTemplate);
+        toast.show();
+
+        toastTemplate.addEventListener('hidden.bs.toast', () => toastTemplate.remove());
+    }
+}
+const toaster = new Toaster();
+
+window.showToast = (header, message) => {
+    toaster.createToastMessage(header, message);
+};
+
+document.addEventListener('DOMContentLoaded', () => new BasePage());
