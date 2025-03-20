@@ -45,7 +45,6 @@ export class MusicPage {
     }
 }
 
-
 class MusicSearchTab {
     constructor() {
         this.selectedType = "track";
@@ -67,6 +66,21 @@ class MusicSearchTab {
                 this.initiateSearch();
             }
         });
+
+        const dropdownItems = document.querySelectorAll('.dropdown-menu .dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', (event) => {
+                event.preventDefault();
+                const type = item.getAttribute('data-type') || item.textContent.trim();
+                this.updateSearchType(type);
+            });
+        });
+
+    }
+
+    updateSearchType(option) {
+        this.selectedType = option.toLowerCase();
+        document.getElementById("music-search-button").innerText = `Search for ${option}`;
     }
 
     initiateSearch() {
@@ -75,6 +89,9 @@ class MusicSearchTab {
 
         if (query) {
             socket.emit('search_spotify', { query, type: this.selectedType });
+        }
+        else {
+            this.changeUI("ready");
         }
     }
 
@@ -155,8 +172,8 @@ class MusicSearchTab {
 
     changeUI(state) {
         ['music-search-button', 'music-search-input', 'music-search-dropdown'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.disabled = state === "busy";
+            const element = document.getElementById(id);
+            if (element) element.disabled = state === "busy";
         });
 
         const spinner = document.getElementById('music-spinner-border');
@@ -195,7 +212,6 @@ class MusicSearchTab {
         socket.emit('spotify_download_item', itemData);
     }
 }
-
 
 class MusicRecommendationsTab {
     constructor() {
