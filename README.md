@@ -109,22 +109,25 @@ MediaWolf/
 │   └── requirements.txt
 ├── frontend/
 │   ├── static/
-│   │   ├── base_script.js
-│   │   ├── base_style.css
-│   │   ├── book_script.js
-│   │   ├── favicon.png
-│   │   ├── lidarr.svg
-│   │   ├── logo.png
-│   │   ├── logs_script.js
-│   │   ├── movies_script.js
-│   │   ├── music_script.js
-│   │   ├── music_style.css
-│   │   ├── settings_script.js
-│   │   ├── shows_script.js
-│   │   ├── subscriptions_script.js
-│   │   ├── tasks_script.js
-│   │   ├── theme_script.js
-│   │   └── yt_dlp.png
+│   │   ├── js/
+│   │   │   ├── base_script.js
+│   │   │   ├── logs_script.js
+│   │   │   ├── movies_script.js
+│   │   │   ├── music_script.js
+│   │   │   ├── music_style.css
+│   │   │   ├── settings_script.js
+│   │   │   ├── shows_script.js
+│   │   │   ├── subscriptions_script.js
+│   │   │   ├── tasks_script.js
+│   │   │   └── theme_script.js
+│   │   ├── css/
+│   │   │   ├── base_style.css
+│   │   │   └── book_script.js
+│   │   └── assets/
+│   │       ├── favicon.png
+│   │       ├── lidarr.svg
+│   │       ├── logo.png
+│   │       └── yt_dlp.png
 │   └── templates/
 │       ├── base.html
 │       ├── books.html
@@ -211,3 +214,12 @@ Make sure you install the pre-commit hooks by running `pre-commit install`
 - Run `git push`
 
 You might face some issues in your files with the pre-commit hooks, fix them and try again.
+
+### Example Development Setup
+
+The development setup is as follows:
+
+- **VSCode** with Black formatting (line length set to 200 characters).
+- **isort** configured for organizing imports.
+- Default formatters for JavaScript, CSS, and HTML.
+- Python 3.12.
