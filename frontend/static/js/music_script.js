@@ -229,8 +229,14 @@ class MusicRecommendationsTab {
     }
 
     setup() {
+        this.loading = true;
+
         socket.emit("load_music_recommendations");
-        document.getElementById('get-recommendations-button').addEventListener('click', () => this.getRecommendations());
+        document.getElementById('get-recommendations-button').addEventListener('click', () => {
+            const artistRow = document.getElementById('artist-row');
+            artistRow.innerHTML = "";
+            this.getRecommendations();
+        });
 
         setTimeout(() => {
             ["min-listeners", "min-play-count"].forEach(id => {
@@ -298,7 +304,11 @@ class MusicRecommendationsTab {
     }
 
     getRecommendations(loadMore = false) {
-        if (!loadMore) this.currentPage = 1;
+        if (!loadMore) {
+            this.currentPage = 1;
+        } else {
+            this.currentPage++;
+        }
 
         if (this.loading) return;
         this.loading = true;
@@ -314,7 +324,6 @@ class MusicRecommendationsTab {
 
         socket.emit("refresh_music_recommendations", data);
 
-        if (loadMore) this.currentPage++;
     }
 
     initInfiniteScroll() {
