@@ -226,6 +226,10 @@ class MusicRecommendationsTab {
             this.loading = false;
         });
         this.initInfiniteScroll();
+        socket.on("refresh_artist", (artist) => {
+            this.updateArtistCard(artist);
+        });
+
     }
 
     setup() {
@@ -250,6 +254,38 @@ class MusicRecommendationsTab {
         }, 500);
     }
 
+    updateArtistCard(artist) {
+        var artistCards = document.querySelectorAll('#artist-column');
+        artistCards.forEach(function (card) {
+            var cardBody = card.querySelector('.card-body');
+            var cardArtistName = cardBody.querySelector('.card-title').textContent.trim();
+
+            if (cardArtistName === artist.name) {
+                cardBody.classList.remove('status-green', 'status-red', 'status-blue');
+
+                var addButton = cardBody.querySelector('.add-to-lidarr-btn');
+
+                if (artist.status === "Added" || artist.status === "Already in Lidarr") {
+                    cardBody.classList.add('status-green');
+                    addButton.classList.remove('btn-primary');
+                    addButton.classList.add('btn-secondary');
+                    addButton.disabled = true;
+                    addButton.textContent = artist.status;
+                } else if (artist.status === "Failed to Add" || artist.status === "Invalid Path") {
+                    cardBody.classList.add('status-red');
+                    addButton.classList.remove('btn-primary');
+                    addButton.classList.add('btn-danger');
+                    addButton.disabled = true;
+                    addButton.textContent = artist.status;
+                } else {
+                    cardBody.classList.add('status-blue');
+                    addButton.disabled = false;
+                }
+                return;
+            }
+        });
+    }
+
     addToLidarr(artistName) {
         if (socket.connected) {
             socket.emit('add_artist_to_lidarr', encodeURIComponent(artistName));
@@ -272,6 +308,9 @@ class MusicRecommendationsTab {
             artistCol.querySelector('.card-img-top').src = artist.image;
             artistCol.querySelector('.card-img-top').alt = artist.name;
             artistCol.querySelector('.add-to-lidarr-btn').addEventListener('click', () => {
+                const addButton = artistCol.querySelector('.add-to-lidarr-btn');
+                addButton.disabled = true;
+                addButton.textContent = 'Adding...';
                 this.addToLidarr(artist.name);
             });
             artistCol.querySelector('.get-overview-btn').addEventListener('click', () => {
@@ -323,7 +362,6 @@ class MusicRecommendationsTab {
         };
 
         socket.emit("refresh_music_recommendations", data);
-
     }
 
     initInfiniteScroll() {
