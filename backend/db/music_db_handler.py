@@ -226,7 +226,7 @@ class MusicDBHandler(DatabaseHandler):
                     rec["status"] = status
 
             else:
-                logger.error(f"No recommended artists found for name '{artist_name}'.")
+                logger.info(f"No recommended artists found for name '{artist_name}'.")
 
         except Exception as e:
             logger.error(f"Error updating status for recommended artist '{artist_name}': {str(e)}")
@@ -239,10 +239,17 @@ class MusicDBHandler(DatabaseHandler):
         session = self.get_session()
         try:
             artist_name = urllib.parse.unquote(raw_artist_name)
-            dismissed_artist = DismissedArtist(name=artist_name)
-            session.add(dismissed_artist)
-            session.commit()
-            logger.info(f"Dismissed artist: {artist_name}")
+            existing_dismissed = session.query(DismissedArtist).filter(func.lower(DismissedArtist.name) == artist_name.lower()).first()
+
+            if not existing_dismissed:
+                dismissed_artist = DismissedArtist(name=artist_name)
+                session.add(dismissed_artist)
+                session.commit()
+                logger.info(f"Dismissed artist: {artist_name}")
+            else:
+                logger.info(f"Artist '{artist_name}' is already dismissed.")
+
+            self.recommended_artists = [artist for artist in self.recommended_artists if artist.get("name", "").lower() != artist_name.lower()]
 
         except Exception as e:
             logger.error(f"Error dismissing artist: {str(e)}")
