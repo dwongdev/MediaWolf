@@ -76,8 +76,6 @@ class BasePage {
             this.pageInstances[page].init();
         }
     }
-
-
 }
 
 class Toaster {
@@ -102,6 +100,7 @@ class Toaster {
         toastTemplate.addEventListener('hidden.bs.toast', () => toastTemplate.remove());
     }
 }
+
 const toaster = new Toaster();
 
 window.showToast = (header, message) => {

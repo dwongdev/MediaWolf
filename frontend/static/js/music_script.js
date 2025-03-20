@@ -215,11 +215,17 @@ class MusicSearchTab {
 
 class MusicRecommendationsTab {
     constructor() {
+        this.currentPage = 1;
+        this.numResults = 10;
+        this.loading = false;
+
         socket.on('music_recommendations', (data) => {
             const artistRow = document.getElementById('artist-row');
-            artistRow.innerHTML = "";
+            if (this.currentPage === 1) artistRow.innerHTML = "";
             this.appendArtists(data.data);
+            this.loading = false;
         });
+        this.initInfiniteScroll();
     }
 
     setup() {
@@ -291,16 +297,38 @@ class MusicRecommendationsTab {
         });
     }
 
-    getRecommendations() {
+    getRecommendations(loadMore = false) {
+        if (!loadMore) this.currentPage = 1;
+
+        if (this.loading) return;
+        this.loading = true;
+
         const data = {
             selected_artist: document.getElementById("artist-select").value || "all",
             sort_by: document.getElementById("sort-select").value || "random",
             min_play_count: parseInt(document.getElementById("min-play-count").value) || null,
             min_listeners: parseInt(document.getElementById("min-listeners").value) || null,
-            num_results: 10,
+            num_results: this.numResults,
+            page: this.currentPage,
         };
 
         socket.emit("refresh_music_recommendations", data);
+
+        if (loadMore) this.currentPage++;
+    }
+
+    initInfiniteScroll() {
+        const sentinel = document.getElementById('scroll-sentinel');
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+
+            const artistSelected = document.getElementById("artist-select").value && document.getElementById("artist-select").value !== "all";
+            if (!artistSelected && entry.isIntersecting && !this.loading) {
+                this.getRecommendations(true);
+            }
+        });
+
+        observer.observe(sentinel);
     }
 
     dismissArtist(event, artist) {
