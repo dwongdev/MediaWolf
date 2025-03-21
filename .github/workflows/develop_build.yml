@@ -37,5 +37,5 @@ jobs:
             --tag ghcr.io/${LOWERCASE_REPO}:${VERSION} \
             --tag ghcr.io/${LOWERCASE_REPO}:develop_latest \
             --build-arg release_version=${VERSION} \
-            --push .
+            --push -f docker/Dockerfile .
           
