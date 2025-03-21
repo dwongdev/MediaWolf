@@ -10,8 +10,8 @@ export class MusicPage {
     }
 
     init() {
-        this.initTabs();
         this.restoreLastActiveTab();
+        this.initTabs();
     }
 
     initTabs() {
@@ -19,29 +19,26 @@ export class MusicPage {
             const tabElement = document.getElementById(`pills-music-${tabName}-tab`);
             if (tabElement) {
                 tabElement.addEventListener('shown.bs.tab', () => {
-                    this.tabs[tabName].setup();
-                    this.storeActiveTab(tabElement.id);
+                    this.switchTab(tabName);
                 });
             }
         });
     }
 
-    storeActiveTab(tabId) {
-        localStorage.setItem('lastActiveMusicTab', tabId);
+    switchTab(tabName) {
+        this.activeTab = tabName;
+        this.storeActiveTab(tabName);
+        this.tabs[tabName].setup();
+    }
+
+    storeActiveTab(tabName) {
+        localStorage.setItem('lastActiveMusicTab', tabName);
     }
 
     restoreLastActiveTab() {
-        const lastTab = localStorage.getItem('lastActiveMusicTab');
-        let activeTabName = 'search';
-
-        if (lastTab && document.getElementById(lastTab)) {
-            activeTabName = lastTab.replace('pills-music-', '').replace('-tab', '');
-            new bootstrap.Tab(document.getElementById(lastTab)).show();
-        }
-
-        if (this.tabs[activeTabName] && typeof this.tabs[activeTabName].setup === 'function') {
-            this.tabs[activeTabName].setup();
-        }
+        const lastTab = localStorage.getItem('lastActiveMusicTab') || 'search';
+        new bootstrap.Tab(document.getElementById(`pills-music-${lastTab}-tab`)).show();
+        this.switchTab(lastTab);
     }
 }
 
@@ -431,12 +428,6 @@ class LidarrWantedTab {
     setup() {
         this.lidarrSpinner = document.getElementById('lidarr-spinner');
         this.lidarrTable = document.getElementById('lidarr-table').getElementsByTagName('tbody')[0];
-        this.lidarrGetWantedButton = document.getElementById('get-lidarr-wanted-btn');
-        this.selectAllCheckbox = document.getElementById("select-all-checkbox");
-
-        this.lidarrGetWantedButton.replaceWith(this.lidarrGetWantedButton.cloneNode(true));
-        this.selectAllCheckbox.replaceWith(this.selectAllCheckbox.cloneNode(true));
-
         this.lidarrGetWantedButton = document.getElementById('get-lidarr-wanted-btn');
         this.selectAllCheckbox = document.getElementById("select-all-checkbox");
 
