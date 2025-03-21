@@ -1,0 +1,25 @@
+services:
+  mediawolf:
+    image: ghcr.io/mediawolforg/mediawolf:develop_latest
+    container_name: mediawolf
+    environment:
+      LIDARR_ADDRESS: http://localhost:8686
+      LIDARR_API_KEY: ""
+      READARR_ADDRESS: http://localhost:8787
+      READARR_API_KEY: ""
+      RADARR_ADDRESS: http://localhost:7878
+      RADARR_API_KEY: ""
+      SONARR_ADDRESS: http://localhost:8989
+      SONARR_API_KEY: ""
+      LASTFM_API_KEY: ""
+      LASTFM_API_SECRET: ""
+      TMDB_API_KEY: ""
+      TVDB_API_KEY: ""
+      SPOTIFY_CLIENT_ID: ""
+      SPOTIFY_CLIENT_SECRET: ""
+    volumes:
+      - /path/to/config:/config
+      - /path/to/downloads:/downloads
+    ports:
+      - 5000:5000
+    restart: unless-stopped
