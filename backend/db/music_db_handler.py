@@ -141,21 +141,25 @@ class MusicDBHandler(DatabaseHandler):
             lidarr_artist = session.query(LidarrArtist).filter(func.lower(LidarrArtist.name) == lidarr_artist_name.lower()).first()
 
             if lidarr_artist:
-                recommended_artists = lidarr_artist.recommended_artists
+                recommended_artists_query = session.query(RecommendedArtist).filter(
+                    RecommendedArtist.lidarr_artist_id == lidarr_artist.id, ~RecommendedArtist.name.in_(session.query(DismissedArtist.name))
+                )
 
                 if min_play_count:
-                    recommended_artists = [artist for artist in recommended_artists if artist.play_count >= min_play_count]
+                    recommended_artists_query = recommended_artists_query.filter(RecommendedArtist.play_count >= min_play_count)
                 if min_listeners:
-                    recommended_artists = [artist for artist in recommended_artists if artist.listeners >= min_listeners]
+                    recommended_artists_query = recommended_artists_query.filter(RecommendedArtist.listeners >= min_listeners)
 
                 if sort_by == "plays-desc":
-                    recommended_artists = sorted(recommended_artists, key=lambda x: x.play_count, reverse=True)
+                    recommended_artists_query = recommended_artists_query.order_by(RecommendedArtist.play_count.desc())
                 elif sort_by == "plays-asc":
-                    recommended_artists = sorted(recommended_artists, key=lambda x: x.play_count)
+                    recommended_artists_query = recommended_artists_query.order_by(RecommendedArtist.play_count.asc())
                 elif sort_by == "listeners-desc":
-                    recommended_artists = sorted(recommended_artists, key=lambda x: x.listeners, reverse=True)
+                    recommended_artists_query = recommended_artists_query.order_by(RecommendedArtist.listeners.desc())
                 elif sort_by == "listeners-asc":
-                    recommended_artists = sorted(recommended_artists, key=lambda x: x.listeners)
+                    recommended_artists_query = recommended_artists_query.order_by(RecommendedArtist.listeners.asc())
+
+                recommended_artists = recommended_artists_query.all()
 
                 logger.debug(f"Found {len(recommended_artists)} recommended artists for: {lidarr_artist_name}")
                 return recommended_artists
@@ -174,7 +178,7 @@ class MusicDBHandler(DatabaseHandler):
         """Retrieve random recommended artists with filters, sorting, and pagination."""
         session = self.SessionLocal()
         try:
-            query = session.query(RecommendedArtist)
+            query = session.query(RecommendedArtist).filter(~RecommendedArtist.name.in_(session.query(DismissedArtist.name)))
 
             if min_play_count:
                 query = query.filter(RecommendedArtist.play_count >= min_play_count)
