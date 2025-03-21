@@ -2,11 +2,14 @@ name: Build Develop Image and Deploy to GHCR
 
 on:
   workflow_dispatch:
-  # push:
-  #  branches:
-  #    - main
-  #  paths-ignore:
-  #    - '**/*.md'
+  push:
+   branches:
+    - main
+   paths-ignore:
+      - '**/*.md'
+      - '**/*.yml'
+      - '/docs'
+      - '/tests'
 
 jobs:
   build-docker-image:
