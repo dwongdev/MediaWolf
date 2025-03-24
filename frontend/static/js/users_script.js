@@ -6,10 +6,14 @@ export class UserPage {
         this.newUserModal = new bootstrap.Modal(document.getElementById('newUserModal'));
         this.setupSocketListeners();
         this.init();
+        this.eventListenersInitFlag = false;
     }
 
     init() {
-        this.setupEventListeners();
+        if (!this.eventListenersInitFlag) {
+            this.setupEventListeners();
+            this.eventListenersInitFlag = true;
+        }
         this.fetchUsers();
     }
 
