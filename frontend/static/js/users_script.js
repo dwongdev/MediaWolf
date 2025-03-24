@@ -5,15 +5,10 @@ export class UserPage {
         this.editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
         this.newUserModal = new bootstrap.Modal(document.getElementById('newUserModal'));
         this.setupSocketListeners();
-        this.init();
-        this.eventListenersInitFlag = false;
     }
 
     init() {
-        if (!this.eventListenersInitFlag) {
-            this.setupEventListeners();
-            this.eventListenersInitFlag = true;
-        }
+        this.setupEventListeners();
         this.fetchUsers();
     }
 
