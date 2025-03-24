@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import declarative_base
 from db.base import Base
+from flask_login import UserMixin
+from sqlalchemy import Column, Integer, String
 
 
-class Users(Base):
+class Users(Base, UserMixin):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -12,12 +12,7 @@ class Users(Base):
     role = Column(String, default="user")
 
     def as_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "role": self.role
-        }
-    
+        return {"id": self.id, "name": self.name, "role": self.role}
 
-
-
+    def get_id(self):
+        return str(self.id)

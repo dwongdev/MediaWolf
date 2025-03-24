@@ -222,7 +222,7 @@ class MusicRecommendationsTab {
             this.appendArtists(data.data);
             this.loading = false;
         });
-        this.initInfiniteScroll();
+
         socket.on("refresh_artist", (artist) => {
             this.updateArtistCard(artist);
         });
@@ -240,6 +240,7 @@ class MusicRecommendationsTab {
         });
 
         setTimeout(() => {
+            this.initInfiniteScroll();
             ["min-listeners", "min-play-count"].forEach(id => {
                 let element = document.getElementById(id);
                 if (element) {

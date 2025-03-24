@@ -23,6 +23,7 @@ class Config:
     puid: int = 1000
     pgid: int = 1000
     release_version: str = "NA"
+    login_required: bool = False
 
     # Last FM Settings
     lastfm_api_key: str = ""
@@ -114,7 +115,7 @@ class Config:
     def load_config(self):
         """Load configuration from environment variables or JSON file."""
         for key, default_value in asdict(self).items():
-            env_value = os.getenv(key.upper())
+            env_value = os.getenv(key)
             if env_value is not None:
                 value = self.parse_value(env_value)
             else:

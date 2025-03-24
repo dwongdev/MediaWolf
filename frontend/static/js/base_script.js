@@ -70,13 +70,12 @@ class BasePage {
                 this.pageInstances.subscriptions = new SubscriptionsPage();
             } else if (page === 'tasks') {
                 this.pageInstances.tasks = new TasksPage();
-            } else if (page === 'users') {  
+            } else if (page === 'users') {
                 this.pageInstances.users = new UserPage();
             }
         }
 
         if (this.pageInstances[page]) {
-            console.log(page)
             this.pageInstances[page].init();
         }
     }

@@ -68,34 +68,13 @@ MediaWolf/
 │   ├── __init__.py
 │   ├── api/
 │   │   ├── __init__.py
-│   │   ├── auth_api.py
-│   │   ├── books_api.py
-│   │   ├── downloads_api.py
-│   │   ├── logs_api.py
-│   │   ├── movies_api.py
-│   │   ├── music_api.py
-│   │   ├── settings_api.py
-│   │   ├── shows_api.py
-│   │   ├── subscriptions_api.py
-│   │   └── tasks_api.py
+│   │   └── example_api.py  # e.g. API for various sections
 │   ├── db/
 │   │   ├── __init__.py
-│   │   ├── database_handler.py
-│   │   ├── music_db_handler.py
-│   │   └── music_models.py
+│   │   └── example_db_handler.py  # e.g. DB handler
 │   ├── services/
 │   │   ├── __init__.py
-│   │   ├── config_services.py
-│   │   ├── lastfm_services.py
-│   │   ├── lidarr_services.py
-│   │   ├── radarr_services.py
-│   │   ├── readarr_services.py
-│   │   ├── sonarr_services.py
-│   │   ├── spotdl_download_services.py
-│   │   ├── spotify_services.py
-│   │   ├── subscription_services.py
-│   │   ├── tasks.py
-│   │   └── ytdlp_services.py
+│   │   └── example_services.py  # e.g. services for various integrations
 │   ├── utils/
 │   │   ├── __init__.py
 │   │   └── string_cleaner.py
@@ -110,39 +89,17 @@ MediaWolf/
 ├── frontend/
 │   ├── static/
 │   │   ├── js/
-│   │   │   ├── base_script.js
-│   │   │   ├── logs_script.js
-│   │   │   ├── movies_script.js
-│   │   │   ├── music_script.js
-│   │   │   ├── music_style.css
-│   │   │   ├── settings_script.js
-│   │   │   ├── shows_script.js
-│   │   │   ├── subscriptions_script.js
-│   │   │   ├── tasks_script.js
-│   │   │   └── theme_script.js
+│   │   │   └── example_script.js  # e.g. script for various sections
 │   │   ├── css/
-│   │   │   ├── base_style.css
-│   │   │   └── book_script.js
+│   │   │   └── example_style.css  # e.g. styles
 │   │   └── assets/
-│   │       ├── favicon.png
-│   │       ├── lidarr.svg
-│   │       ├── logo.png
-│   │       └── yt_dlp.png
 │   └── templates/
 │       ├── base.html
-│       ├── books.html
-│       ├── downloads.html
-│       ├── login.html
-│       ├── logs.html
-│       ├── movies.html
-│       ├── music.html
-│       ├── settings.html
-│       ├── shows.html
-│       ├── subscriptions.html
-│       └── tasks.html
+│       └── example_template.html  # e.g. template for various sections
 ├── docs/
 │   └── screenshot.png
 └── README.md
+
 ```
 
 
@@ -179,7 +136,7 @@ MediaWolf/
 - [ ] Playlist Generators (For Audio Files)
 
 **Login Manager**
-- [ ] Login and Account Manager
+- [x] Login and User Management
 
 **Settings Manager**
 - [x] Settings Loader & Saver
