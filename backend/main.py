@@ -11,6 +11,7 @@ from api.shows_api import ShowsAPI
 from api.subscriptions_api import SubscriptionsAPI
 from api.tasks_api import TasksAPI
 from api.users_api import UsersAPI
+from db.movie_db_handler import MovieDBHandler
 from db.music_db_handler import MusicDBHandler
 from db.user_db_handler import UserDBHandler
 from flask import Flask, flash, redirect, render_template, request, url_for
@@ -24,6 +25,7 @@ from services.readarr_services import ReadarrService
 from services.sonarr_services import SonarrService
 from services.spotdl_download_services import SpotDLDownloadService
 from services.spotify_services import SpotifyService
+from services.tmdb_services import TMDBService
 from services.user_services import UserService
 
 
@@ -43,19 +45,21 @@ class MediaWolfApp:
         self.socketio = SocketIO(self.app, cors_allowed_origins="*")
 
         self.music_db = MusicDBHandler()
+        self.movies_db = MovieDBHandler()
         self.user_db = UserDBHandler()
         self.config = Config()
         self.lidarr_service = LidarrService(self.config, self.music_db)
         self.sonarr_service = SonarrService()
-        self.radarr_service = RadarrService()
+        self.radarr_service = RadarrService(self.config, self.movies_db)
         self.readarr_service = ReadarrService()
         self.spotdl_download_service = SpotDLDownloadService(self.config, self.spotdl_download_history)
         self.spotify_service = SpotifyService(self.config)
+        self.tmdb_service = TMDBService(self.config)
         self.user_service = UserService()
 
         self.music_api = MusicAPI(self.music_db, self.socketio, self.lidarr_service, self.spotify_service, self.spotdl_download_service)
         self.books_api = BooksAPI(self.music_db, self.socketio, self.readarr_service)
-        self.movies_api = MoviesAPI(self.music_db, self.socketio, self.radarr_service)
+        self.movies_api = MoviesAPI(self.movies_db, self.socketio, self.radarr_service, self.tmdb_service)
         self.shows_api = ShowsAPI(self.music_db, self.socketio, self.sonarr_service)
         self.downloads_api = DownloadsAPI(self.socketio)
         self.subscriptions_api = SubscriptionsAPI(self.socketio, self.config)

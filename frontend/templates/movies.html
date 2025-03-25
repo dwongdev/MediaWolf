@@ -4,15 +4,15 @@
 <h1>Movies</h1>
 
 <!-- Pills for Search and Recommendations -->
-<div class="btn-group mb-3" role="tablist" id="pills-tab" aria-label="Movies Tabs">
-    <a class="btn btn-outline-secondary active" id="pills-movies-search-tab" data-bs-toggle="pill"
-        href="#pills-movies-search" role="tab" aria-controls="pills-movies-search" aria-selected="true">Search</a>
-    <a class="btn btn-outline-secondary" id="pills-movies-recommendations-tab" data-bs-toggle="pill"
-        href="#pills-movies-recommendations" role="tab" aria-controls="pills-movies-recommendations"
+<div class="btn-group mb-3" role="tablist" id="pills-tab" aria-label="Movie Tabs">
+    <a class="btn btn-outline-secondary active" id="pills-movie-search-tab" data-bs-toggle="pill"
+        href="#pills-movie-search" role="tab" aria-controls="pills-movie-search" aria-selected="true">Search</a>
+    <a class="btn btn-outline-secondary" id="pills-movie-recommendations-tab" data-bs-toggle="pill"
+        href="#pills-movie-recommendations" role="tab" aria-controls="pills-movie-recommendations"
         aria-selected="false">Recommendations</a>
 </div>
 
-<div class="tab-content" id="pills-tab-content">
+<div class="tab-content d-flex flex-column flex-grow-1" id="pills-tab-content">
     <!-- Search Pill -->
     <div class="tab-pane fade show active" id="pills-movie-search" role="tabpanel">
         <div class="col-md-10">
@@ -20,7 +20,7 @@
                 <input id="movie-search-input" type="text" class="form-control" placeholder="Enter search text..."
                     aria-label="Search..." aria-describedby="movie-search-input">
                 <button id="movie-search-button" type="button" class="btn btn-primary">
-                    Search
+                    Search for Movie
                     <span id="movie-spinner-border" class="spinner-border spinner-border-sm ms-2" role="status"
                         aria-hidden="true" style="display: none;"></span>
                 </button>
@@ -28,8 +28,131 @@
         </div>
         <!-- Results Section -->
         <section id="results-section" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- Dynamically populated cards will appear here -->
         </section>
+    </div>
+
+    <!-- Recommendations Pill -->
+    <div class="tab-pane fade" id="pills-movie-recommendations" role="tabpanel">
+        <h5>Sort & Filters</h5>
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <label for="min-vote-average" class="form-label">Min Vote Average</label>
+                <input type="number" class="form-control" id="min-vote-average" min="0.0" step="0.1"
+                    placeholder="Min Vote Average">
+            </div>
+            <div class="col-md-2">
+                <label for="min-popularity" class="form-label">Min Popularity</label>
+                <input type="number" class="form-control" id="min-popularity" min="0.0" step="0.1"
+                    placeholder="Min Popularity">
+            </div>
+            <div class="col-md-2">
+                <label for="movie-select" class="form-label">Select Movie</label>
+                <select class="form-select" id="movie-select">
+                    <option value="all">All</option>
+                    {% for movie in movies %}
+                    <option value="{{ movie }}">{{ movie }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label for="sort-select" class="form-label">Sort By</label>
+                <select class="form-select" id="sort-select">
+                    <option value="random">Random</option>
+                    <option value="pop-desc">Popularity Desc</option>
+                    <option value="pop-asc">Popularity Asc</option>
+                    <option value="average-vote-desc">Average Vote Desc</option>
+                    <option value="average-vote-asc">Average Vote Asc</option>
+                </select>
+            </div>
+
+            <div class="col-md-2 align-self-end">
+                <button id="get-recommendations-button" class="btn btn-secondary">Refresh</button>
+            </div>
+        </div>
+        <hr>
+        <div id="recommendations-results" class="list-group mt-3">
+            <!-- Artits Cards -->
+            <div class="container-fluid" id="movie-container">
+                <div class="row" id="movie-row">
+                </div>
+            </div>
+            <div id="scroll-sentinel"></div>
+        </div>
     </div>
 </div>
 
+<!-- Radarr Movie Template -->
+<template id="movie-template">
+    <div class="col-12 col-md-4 col-xxl-2 mb-3" id="movie-column">
+        <div class="card">
+            <div class="card-body">
+                <div class="status-indicator">
+                    <div class="led"></div>
+                </div>
+                <h5 class="card-title"></h5>
+                <p class="card-text genre"></p>
+                <div class="movie-img-container">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="movie-img-overlay"></div>
+                    <div class="button-container">
+                        <button class="btn btn-primary add-to-radarr-btn">Add to Radarr</button>
+                        <button class="btn btn-success get-overview-btn">Overview</button>
+                        <button class="btn btn-warning dismiss-movie-btn">Dismiss</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-between">
+                        <p class="card-text vote-average mb-0"></p>
+                        <p class="card-text popularity mb-0 text-end"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Search Movie Template -->
+<template id="search-movie-template">
+    <div class="col-12 col-md-4 col-xxl-2 mb-3" id="movie-column">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text genre"></p>
+                <div class="movie-img-container">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="movie-img-overlay"></div>
+                    <div class="button-container">
+                        <button class="btn btn-primary add-to-radarr-btn">Add to Radarr</button>
+                        <button class="btn btn-success get-overview-btn">Overview</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-between">
+                        <p class="card-text vote-average mb-0"></p>
+                        <p class="card-text popularity mb-0 text-end"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Overview Modal -->
+<div class="modal fade" id="overview-modal" tabindex="-1" aria-labelledby="overview-modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="overview-modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

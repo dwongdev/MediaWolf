@@ -72,7 +72,9 @@ class Config:
 
     # API keys
     tmdb_api_key: str = ""
+    tmdb_sleep_interval: float = 0.0
     tvdb_api_key: str = ""
+    tvdb_sleep_interval: float = 0.0
 
     # Spotify settings
     spotify_client_id: str = ""
@@ -123,7 +125,7 @@ class Config:
 
             setattr(self, key, value)
 
-        self.save_config()
+        ret_status = self.save_config()
 
     def parse_value(self, value: str) -> Any:
         """Parse environment variable values to correct types."""
@@ -139,6 +141,8 @@ class Config:
     def save_config(self, settings_to_save={}):
         """Save the current configuration to the JSON file."""
         try:
+            status_info = {"status": "success", "message": "Saved Succesfully"}
+
             for key, value in settings_to_save.items():
                 setattr(self, key, self.parse_value(value))
 
@@ -147,6 +151,10 @@ class Config:
 
         except Exception as e:
             logger.error(f"Error saving config file: {str(e)}")
+            status_info = {"status": "failure", "message": f"Error: {str(e)}"}
+
+        finally:
+            return status_info
 
     def as_dict(self) -> Dict[str, Any]:
         """Return configuration as a dictionary."""

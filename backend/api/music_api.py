@@ -35,7 +35,7 @@ class MusicAPI:
         @self.socketio.on("refresh_music_recommendations")
         def handle_refresh_music_recommendations(data):
             recommended_artists = self.db.refresh_recommendations(data)
-            if not recommended_artists:
+            if not len(recommended_artists):
                 self.socketio.emit("new_toast_msg", {"title": "No artists found", "message": "Check logs for more info"})
 
             self.socketio.emit("music_recommendations", {"data": recommended_artists})

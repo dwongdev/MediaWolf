@@ -33,7 +33,8 @@ class SettingsAPI:
         @self.socketio.on("save_settings")
         def save_settings(data):
             """Endpoint to save settings."""
-            self.config.save_config(data)
+            status_info = self.config.save_config(data)
+            self.socketio.emit("new_toast_msg", {"title": f"Settings {status_info.get('status')}", "message": status_info.get("message")})
 
     def get_blueprint(self):
         return settings_bp

@@ -72,7 +72,6 @@ class MusicSearchTab {
                 this.updateSearchType(type);
             });
         });
-
     }
 
     updateSearchType(option) {

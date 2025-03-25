@@ -98,6 +98,8 @@ MediaWolf/
 │       └── example_template.html  # e.g. template for various sections
 ├── docs/
 │   └── screenshot.png
+├── tests/
+│   └── generate_recommendations_for_test.py
 └── README.md
 
 ```
@@ -112,8 +114,8 @@ MediaWolf/
 - [ ] Download engine -> Similar to [calibre-web-automated-book-downloader](https://github.com/calibrain/calibre-web-automated-book-downloader)
 
 **Movies (Radarr & TMDB)**
-- [ ] Recommendations based on Radarr Movie List -> Similar to [RadaRec](https://github.com/TheWicklowWolf/RadaRec)
-- [ ] Manual Search
+- [x] Recommendations based on Radarr Movie List -> Similar to [RadaRec](https://github.com/TheWicklowWolf/RadaRec)
+- [x] Manual Search
 
 **TV Shows (Sonarr & TMDB)**
 - [ ] Recommendations based on Sonarr Show List -> Similar to [SonaShow](https://github.com/TheWicklowWolf/SonaShow)
@@ -125,15 +127,15 @@ MediaWolf/
 - [x] Recommendations
 
 **Downloads**
-- [ ] Download via SpotDL or yt-dlp directly
+- [ ] Download via SpotDL or yt-dlp directly -> Similar to [SpotTube](https://github.com/TheWicklowWolf/SpotTube)
 
 **Tasks**
 - [ ] Task Manager System (Cron schedule, Manual Start, Stop and Cancel)
 
 **Subscriptions**
-- [ ] YouTube Channels (Audio, Video, Live)
-- [ ] YouTube and Spotify Playlists (Audio)
-- [ ] Playlist Generators (For Audio Files)
+- [ ] YouTube Channels (Audio, Video, Live) -> Similar to [ChannelTube](https://github.com/TheWicklowWolf/ChannelTube)
+- [ ] YouTube and Spotify Playlists (Audio) -> Similar to [Syncify](https://github.com/TheWicklowWolf/Syncify)
+- [ ] Playlist Generators (For Audio Files) -> Similar to [PlaylistDir](https://github.com/TheWicklowWolf/PlaylistDir)
 
 **Login Manager**
 - [x] Login and User Management
