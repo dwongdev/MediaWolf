@@ -45,6 +45,10 @@ class LidarrService:
 
         except Exception as e:
             logger.error(f"Error generating and storing LastFM recommendations: {str(e)}")
+            return "Failed"
+
+        else:
+            return "Completed"
 
     def refresh_lidarr_artists(self):
         try:
@@ -53,6 +57,10 @@ class LidarrService:
 
         except Exception as e:
             logger.error(f"Error Refreshing Lidarr Artists: {str(e)}")
+            return "Failed"
+
+        else:
+            return "Completed"
 
     def _get_artists(self):
         try:
@@ -60,6 +68,7 @@ class LidarrService:
             endpoint = f"{self.config.lidarr_address}/api/v1/artist"
             headers = {"X-Api-Key": self.config.lidarr_api_key}
             response = requests.get(endpoint, headers=headers, timeout=self.config.lidarr_api_timeout)
+            response.raise_for_status()
 
             if response.status_code == 200:
                 return response.json() or []
@@ -70,7 +79,7 @@ class LidarrService:
 
         except requests.RequestException as e:
             logger.error(f"Lidarr API Request Failed: {str(e)}")
-            return []
+            raise
 
     def add_artist_to_lidarr(self, raw_artist_name):
         try:

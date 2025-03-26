@@ -12,6 +12,7 @@
                 <tr>
                     <th>Task Name</th>
                     <th>Cron Expression</th>
+                    <th>Last Run</th>
                     <th>Status</th>
                     <th>Controls</th>
                 </tr>
@@ -25,23 +26,26 @@
 <template id="task-template">
     <tr id="task-row-{{id}}">
         <td class="task-name"></td>
-        <td class="task-cron"></td>
+        <td>
+            <input type="text" class="task-cron form-control" value="" />
+        </td>
+        <td class="task-last-run"></td>
         <td class="task-status"></td>
         <td class="task-controls">
             <button class="btn btn-primary" data-bs-toggle="tooltip" title="Manual Start">
                 <i class="bi bi-play-circle"></i>
             </button>
-            <button class="btn btn-warning" data-bs-toggle="tooltip" title="Pause">
-                <i class="bi bi-pause-circle"></i>
-            </button>
-            <button class="btn btn-danger" data-bs-toggle="tooltip" title="Stop">
+            <button class="btn btn-warning" data-bs-toggle="tooltip" title="Stop">
                 <i class="bi bi-stop-circle"></i>
             </button>
-            <button class="btn btn-secondary" data-bs-toggle="tooltip" title="Cancel">
-                <i class="bi bi-x-circle"></i>
-            </button>
-            <button class="btn btn-info" data-bs-toggle="tooltip" title="Disable">
+            <button class="btn btn-secondary" data-bs-toggle="tooltip" title="Disable">
                 <i class="bi bi-slash-circle"></i>
+            </button>
+            <button class="btn btn-info" data-bs-toggle="tooltip" title="Enable">
+                <i class="bi bi-check-circle"></i>
+            </button>
+            <button class="btn btn-dark save-cron-btn" data-bs-toggle="tooltip" title="Save Cron">
+                <i class="bi bi-save"></i>
             </button>
         </td>
     </tr>

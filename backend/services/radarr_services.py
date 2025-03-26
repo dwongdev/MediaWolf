@@ -39,6 +39,10 @@ class RadarrService:
 
         except Exception as e:
             logger.error(f"Error generating and storing LastFM recommendations: {str(e)}")
+            return "Failed"
+
+        else:
+            return "Completed"
 
     def refresh_radarr_movies(self):
         try:
@@ -47,6 +51,10 @@ class RadarrService:
 
         except Exception as e:
             logger.error(f"Error Refreshing Radarr Movies: {str(e)}")
+            return "Failed"
+
+        else:
+            return "Completed"
 
     def _get_movies(self):
         try:
@@ -64,7 +72,7 @@ class RadarrService:
 
         except requests.RequestException as e:
             logger.error(f"Radarr API Request Failed: {str(e)}")
-            return []
+            raise
 
     def add_movie_to_radarr(self, movie_title, tmdb_id):
         try:

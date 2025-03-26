@@ -45,6 +45,17 @@ export class TasksPage {
         socket.emit("task_disable", taskId);
     }
 
+    enableTask(taskId) {
+        socket.emit("task_enable", taskId);
+    }
+
+    saveCron(taskId) {
+        const row = document.querySelector(`#task-row-${taskId}`);
+        const newCron = row.querySelector('.task-cron').value;
+
+        socket.emit("update_task_cron", { taskId, newCron });
+    }
+
     renderTasks(tasks) {
         const tableBody = document.getElementById('tasks-table');
         tableBody.innerHTML = '';
@@ -54,20 +65,22 @@ export class TasksPage {
             const newRow = template.content.cloneNode(true);
 
             newRow.querySelector('.task-name').textContent = task.name;
-            newRow.querySelector('.task-cron').textContent = task.cron;
+            newRow.querySelector('.task-cron').value = task.cron;
+            newRow.querySelector('.task-last-run').textContent = task.last_run;
             newRow.querySelector('.task-status').textContent = task.status;
 
             const row = newRow.querySelector('tr');
             row.id = `task-row-${task.id}`;
 
             newRow.querySelector('.btn-primary').addEventListener('click', () => this.manualStart(task.id));
-            newRow.querySelector('.btn-warning').addEventListener('click', () => this.pauseTask(task.id));
-            newRow.querySelector('.btn-danger').addEventListener('click', () => this.stopTask(task.id));
-            newRow.querySelector('.btn-secondary').addEventListener('click', () => this.cancelTask(task.id));
-            newRow.querySelector('.btn-info').addEventListener('click', () => this.disableTask(task.id));
+            newRow.querySelector('.btn-warning').addEventListener('click', () => this.stopTask(task.id));
+            newRow.querySelector('.btn-secondary').addEventListener('click', () => this.disableTask(task.id));
+            newRow.querySelector('.btn-info').addEventListener('click', () => this.enableTask(task.id));
+            newRow.querySelector('.save-cron-btn').addEventListener('click', () => this.saveCron(task.id));
 
             tableBody.appendChild(newRow);
         });
+
         this.initializeTooltips();
     }
 

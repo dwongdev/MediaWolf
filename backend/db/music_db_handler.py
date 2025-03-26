@@ -74,12 +74,10 @@ class MusicDBHandler(DatabaseHandler):
 
             if lidarr_artist:
                 new_recommended_count = 0
+                artists_in_db = self.get_existing_db_artists()
                 for recommended in recommended_artists:
                     try:
                         recommended_name = recommended["name"].strip()
-
-                        artists_in_db = self.get_existing_db_artists()
-
                         if recommended_name.lower() in artists_in_db:
                             logger.info(f"Artist: {recommended_name} already in Lidarr")
                         else:

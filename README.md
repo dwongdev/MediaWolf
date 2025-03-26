@@ -130,7 +130,7 @@ MediaWolf/
 - [ ] Download via SpotDL or yt-dlp directly -> Similar to [SpotTube](https://github.com/TheWicklowWolf/SpotTube)
 
 **Tasks**
-- [ ] Task Manager System (Cron schedule, Manual Start, Stop and Cancel)
+- [x] Task Manager System (Cron schedule, Manual Start, Stop, Enable and Disable)
 
 **Subscriptions**
 - [ ] YouTube Channels (Audio, Video, Live) -> Similar to [ChannelTube](https://github.com/TheWicklowWolf/ChannelTube)
