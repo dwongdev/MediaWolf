@@ -194,10 +194,12 @@ class MusicDBHandler(DatabaseHandler):
             elif sort_by == "listeners-asc":
                 query = query.order_by(RecommendedArtist.listeners.asc())
 
+            query = query.group_by(RecommendedArtist.name)
+
             offset = (page - 1) * num_results
             query = query.offset(offset).limit(num_results)
 
-            artists = query.distinct().all()
+            artists = query.all()
 
             logger.debug(f"Page {page}: Retrieved {len(artists)} artists sorted by {sort_by}")
             return artists
