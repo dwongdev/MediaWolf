@@ -32,14 +32,19 @@ Thanks for your interest! 🚀
 ✅ Recommendations → Read Radarr library and suggest similar movies via TMDB (with options to add or dismiss suggestions including filters and sorting)  
 ✅ Manual Search → Search via TMDB with option to add to Radarr
 
-#### TV Shows (Sonarr & TMDB)  
+### TV Shows (Sonarr & TMDB)  
 ✅ Recommendations → Read Sonarr library and suggest similar shows via TMDB (with options to add or dismiss suggestions including filters and sorting)  
 ✅ Manual Search → Search via TMDB with option to add to Sonarr
 
-## Music (Lidarr, LastFM, yt-dlp, Spotify)  
+### Music (Lidarr, LastFM, yt-dlp & Spotify)  
 ✅ Manual Search → Search Spotify for music and download via spotDL (which uses yt-dlp)  
 ✅ Recommendations → Generate artist recommendations from LastFM based on Lidarr library (with options to add or dismiss suggestions including filters and sorting)  
 ✅ Missing List → Read Lidarr library, fetch missing albums and download via yt-dlp  
+
+### Audiobooks (Readarr, Spotify, AudioBookBay & LibriVox??)  
+✅ Missing List → Read from Readarr library, fetch missing audiobooks and auto-download  
+✅ Manual Search → Search Spotify and download audiobooks (user selection and defined file structure)  
+✅ Recommendations → Generate audiobook suggestions based on Readarr library - with options to add or dismiss suggestions including filters and sorting  
 
 ### Downloads (via yt-dlp)  
 ✅ Direct Download Page → Input YouTube or Spotify link and download video/audio using spotDL or yt-dlp  
@@ -125,6 +130,11 @@ MediaWolf/
 - [ ] Lidarr Missing List Scheduled Downloader -> Similar to [LidaTube](https://github.com/TheWicklowWolf/LidaTube)
 - [x] Manual Search
 - [x] Recommendations
+
+**Audiobooks (Spotify & LibriVox??)**
+- [ ] Missing List Scheduled Downloader -> Similar to [audiobookbay-automated](https://github.com/JamesRy96/audiobookbay-automated)
+- [ ] Manual Search -> Similar to [AudioBookRequest](https://github.com/markbeep/AudioBookRequest)
+- [ ] Recommendations based on Readarr Audiobook List
 
 **Downloads**
 - [ ] Download via SpotDL or yt-dlp directly -> Similar to [SpotTube](https://github.com/TheWicklowWolf/SpotTube)
