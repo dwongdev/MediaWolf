@@ -194,9 +194,7 @@ A recommended development setup includes:
 - Default formatters for JavaScript, CSS, and HTML.
 - Python 3.12.
 
----
-
-## Docker Image Preview - Minimal Functionality
+## Docker Compose - Preview Image with minimal Functionality
 
 ```yaml
 services:
@@ -204,24 +202,24 @@ services:
     image: ghcr.io/mediawolforg/mediawolf:develop_latest
     container_name: mediawolf
     environment:
-      lidarr_address: "http://localhost:8686"
-      lidarr_api_key: ""
-      readarr_address: "http://localhost:8787"
-      readarr_api_key: ""
-      radarr_address: "http://localhost:7878"
-      radarr_api_key: ""
-      sonarr_address: "http://localhost:8989"
-      sonarr_api_key: ""
-      lastfm_api_key: ""
-      lastfm_api_secret: ""
-      tmdb_api_key: ""
-      tvdb_api_key: ""
-      spotify_client_id: ""
-      spotify_client_secret: ""
+      - lidarr_address=http://localhost:8686
+      - lidarr_api_key=""
+      - readarr_address=http://localhost:8787
+      - readarr_api_key=""
+      - radarr_address=http://localhost:7878
+      - radarr_api_key=""
+      - sonarr_address=http://localhost:8989
+      - sonarr_api_key=""
+      - lastfm_api_key=""
+      - lastfm_api_secret=""
+      - tmdb_api_key=""
+      - tvdb_api_key=""
+      - spotify_client_id=""
+      - spotify_client_secret=""
     volumes:
       - /path/to/config:/config
       - /path/to/downloads:/downloads
     ports:
-      - "5000:5000"
+      - 5000:5000
     restart: unless-stopped
 ```
