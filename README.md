@@ -153,42 +153,75 @@ MediaWolf/
 **Settings Manager**
 - [x] Settings Loader & Saver
 
-
 # 📦 Local Development Setup
 
-**Docker Setup**
+## Docker Setup
 
-In order to quickly get started with the project you can use the docker compose file to start the project.
+To quickly get started with the project, you can use the Docker Compose file.
 
-- Make sure you have docker and docker compose installed
-- Clone the repository
-- Run `docker compose up -d`
-- Access the application at `http://127.0.0.1:5000`
+- Make sure you have Docker and Docker Compose installed.
+- Clone the repository.
+- Run `docker compose up -d`.
+- Access the application at `http://127.0.0.1:5000`.
 
+## Manual Setup
 
-**Manual Setup**
+- Clone the repository.
+- Create a virtual environment and activate it (You can use `pyenv` to manage multiple Python versions easily).
+- Run `pip install -r docker/requirements.txt`.
+- Run `export FLASK_APP=backend/main.py && flask run`.
+- Access the application at `http://127.0.0.1:5000`.
 
-- Clone the repository
-- create a virtual environment and activate it (You can use pyenv for ease of maintaining multiple versions)
-- Run `pip install -r docker/requirements.txt`
-- Run `export FLASK_APP=backend/main.py && flask run`
-- Access the application at `http://127.0.0.1:5000`
+## Committing Changes
 
-**Commiting Changes**
+Ensure you have pre-commit hooks installed by running:
 
-Make sure you install the pre-commit hooks by running `pre-commit install`
-
+```sh
+pre-commit install
 - Run `git add .`
 - Run `git commit -m "Commit Message"`
 - Run `git push`
+```
 
-You might face some issues in your files with the pre-commit hooks, fix them and try again.
+If pre-commit hooks flag any issues, follow the suggested fixes and commit again.
 
-### Example Development Setup
+## Example Development Setup
 
-The development setup is as follows:
+A recommended development setup includes:
 
 - **VSCode** with Black formatting (line length set to 200 characters).
 - **isort** configured for organizing imports.
 - Default formatters for JavaScript, CSS, and HTML.
 - Python 3.12.
+
+---
+
+## Docker Image Preview - Minimal Functionality
+
+```yaml
+services:
+  mediawolf:
+    image: ghcr.io/mediawolforg/mediawolf:develop_latest
+    container_name: mediawolf
+    environment:
+      lidarr_address: "http://localhost:8686"
+      lidarr_api_key: ""
+      readarr_address: "http://localhost:8787"
+      readarr_api_key: ""
+      radarr_address: "http://localhost:7878"
+      radarr_api_key: ""
+      sonarr_address: "http://localhost:8989"
+      sonarr_api_key: ""
+      lastfm_api_key: ""
+      lastfm_api_secret: ""
+      tmdb_api_key: ""
+      tvdb_api_key: ""
+      spotify_client_id: ""
+      spotify_client_secret: ""
+    volumes:
+      - /path/to/config:/config
+      - /path/to/downloads:/downloads
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+```

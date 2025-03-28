@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 
+from api.audiobooks_api import AudioBooksAPI
 from api.books_api import BooksAPI
 from api.downloads_api import DownloadsAPI
 from api.logs_api import LogsAPI
@@ -58,6 +59,7 @@ class MediaWolfApp:
         self.user_service = UserService()
 
         self.music_api = MusicAPI(self.music_db, self.socketio, self.lidarr_service, self.spotify_service, self.spotdl_download_service)
+        self.audiobooks_api = AudioBooksAPI(self.music_db, self.socketio, self.readarr_service)
         self.books_api = BooksAPI(self.music_db, self.socketio, self.readarr_service)
         self.movies_api = MoviesAPI(self.movies_db, self.socketio, self.radarr_service, self.tmdb_service)
         self.shows_api = ShowsAPI(self.music_db, self.socketio, self.sonarr_service)
@@ -78,6 +80,7 @@ class MediaWolfApp:
 
     def add_routes(self):
         """Define Flask routes."""
+        self.app.register_blueprint(self.audiobooks_api.get_blueprint())
         self.app.register_blueprint(self.books_api.get_blueprint())
         self.app.register_blueprint(self.movies_api.get_blueprint())
         self.app.register_blueprint(self.shows_api.get_blueprint())
