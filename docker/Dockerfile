@@ -1,4 +1,3 @@
-
 FROM python:3.12-alpine
 
 # Set arguments and env
@@ -19,9 +18,7 @@ COPY . /mediawolf
 WORKDIR /mediawolf
 RUN chown -R $puid:$pgid /mediawolf
 
-
-RUN apk update && apk add --no-cache su-exec
-
+RUN apk update && apk add --no-cache ffmpeg su-exec
 # Install Firefox and Xvfb for web scraping
 # RUN apk --no-cache add \
 #    firefox \
