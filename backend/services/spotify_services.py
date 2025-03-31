@@ -88,3 +88,44 @@ class SpotifyService:
                 )
 
         return {key: value for key, value in parsed_results.items() if value}
+
+    def search_audiobooks(self, query):
+        """Perform a search for audiobooks."""
+        try:
+            logger.info(f"Audiobook search query: {query}")
+            client_credentials_manager = SpotifyClientCredentials(client_id=self.config.spotify_client_id, client_secret=self.config.spotify_client_secret)
+            self.sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
+            results = self.sp.search(q=query, limit=self.config.spotify_search_limit, type="audiobook")
+            return self.parse_audiobook_data(results)
+
+        except Exception as e:
+            logger.error(f"Spotify Audiobook Search Error: {str(e)}")
+            return None
+
+    def parse_audiobook_data(self, results):
+        parsed_results = {"audiobooks": []}
+
+        if "audiobooks" in results and "items" in results["audiobooks"]:
+            for item in results["audiobooks"]["items"]:
+                try:
+                    parsed_results["audiobooks"].append(
+                        {
+                            "type": "audiobook",
+                            "name": item["name"],
+                            "author": item["authors"][0]["name"] if item.get("authors") else "Unknown",
+                            "authors": " ,".join([x["name"] for x in item.get("authors", [])]),
+                            "url": item["external_urls"]["spotify"],
+                            "overview": item.get("description", ""),
+                            "html_description": item.get("html_description", ""),
+                            "languages": " ,".join(item.get("languages", [])),
+                            "image": item["images"][0]["url"] if item.get("images") else None,
+                            "narrators": " ,".join([x["name"] for x in item.get("narrators", [])]),
+                        }
+                    )
+
+                except Exception as e:
+                    logger.error(f"Spotify Audiobook Parse Error: {str(e)}")
+                    continue
+
+        return parsed_results if parsed_results["audiobooks"] else None

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Audio Books</h1>
+<h1>Audiobooks</h1>
 
 <!-- Pills for Search and Recommendations -->
 <div class="btn-group mb-3" role="tablist" id="pills-tab" aria-label="Audio Books Tabs">
@@ -33,6 +33,46 @@
         <!-- Results Section -->
         <section id="results-section" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         </section>
+    </div>
+</div>
+
+<!-- Search Template -->
+<template id="spotify-audiobook-item-template">
+    <div class="col">
+        <div class="card">
+            <div class="audiobook-img-container">
+                <img src="" alt="audiobook image" class="card-img-top audiobook-img">
+                <div class="audiobook-img-overlay"></div>
+                <div class="button-container">
+                    <button class="btn btn-primary add-to-readarr-btn">Add to Readarr</button>
+                    <button class="btn btn-success get-overview-btn">Overview</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span class="author"></span> - <span class="name"></span>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">Type: <span class="type">Audiobook</span></h6>
+                <a href="" class="btn btn-primary download w-100" data-url="">Download</a>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Overview Modal -->
+<div class="modal fade" id="overview-modal" tabindex="-1" aria-labelledby="overview-modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="overview-modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

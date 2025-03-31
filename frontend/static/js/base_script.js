@@ -6,6 +6,7 @@ import { SettingsPage } from './settings_script.js';
 import { SubscriptionsPage } from './subscriptions_script.js';
 import { TasksPage } from './tasks_script.js';
 import { UserPage } from './users_script.js';
+import { AudiobookPage } from './audiobooks_script.js';
 
 class BasePage {
     constructor() {
@@ -72,6 +73,8 @@ class BasePage {
                 this.pageInstances.tasks = new TasksPage();
             } else if (page === 'users') {
                 this.pageInstances.users = new UserPage();
+            } else if (page === 'audiobooks') {
+                this.pageInstances.audiobooks = new AudiobookPage();
             }
         }
 
