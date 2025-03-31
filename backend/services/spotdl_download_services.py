@@ -51,7 +51,7 @@ class SpotDLDownloadService:
             try:
                 logger.info(f"Downloading: {url}")
 
-                command = ["spotdl", "--output", f"{download_path}", url]
+                command = ["spotdl", "--output", f"/downloads/{download_path}", url]
                 logger.info(f"SpotDL command: {command}")
 
                 self.spodtdl_subprocess = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
