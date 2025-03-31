@@ -20,7 +20,7 @@ class TMDBService:
             for movie in data["results"]:
                 ret_list.append(movie)
 
-            logger.info(f"Sleeping for {self.config.tmdb_rate_limit} seconds to prevent rate limiting")
+            logger.info(f"Sleeping for {self.config.tmdb_sleep_interval} seconds to prevent rate limiting")
             time.sleep(self.config.tmdb_sleep_interval)
 
             return ret_list
