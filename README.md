@@ -223,3 +223,6 @@ services:
       - 5000:5000
     restart: unless-stopped
 ```
+
+# Discord
+https://discord.gg/hxXzH9Xkcx
