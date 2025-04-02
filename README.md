@@ -1,4 +1,4 @@
-# MediaWolf 
+# MediaWolf
 
 🚧 **Project Status: Early Development** 🚧  
 
@@ -12,7 +12,7 @@ Contributions are welcome from anyone who wants to help shape the project! Here�
  
 > **1. Start a discussion** – Before diving in, use the repo's Discussions tab to share what you’re planning. This helps avoid overlap and keeps everyone on the same page.  
 >  
-> **2. Create a Fork** – Fork the repository to create your own copy. Next, create a new branch within your fork for your changes. Push your branch so your progress is visible, and when you're ready, submit a Pull Request (PR).
+> **2. Create a Fork** – Fork the repository to create your own copy. Next, create a new branch within your fork for your changes. Push your branch so your progress is visible and when you're ready, submit a Pull Request (PR).
 >
 > **3. Recognition** – Contributors who handle a significant part of the work will be added as maintainers of the project and the organisation to help guide the project forward.  
 
@@ -24,33 +24,33 @@ Thanks for your interest! 🚀
 ## **🌍 Proposed Project Features:**
 
 ### Books (Readarr & Anna’s Archive)  
-✅ Missing List → Read from Readarr, fetch missing books and auto-download via Anna’s Archive  
-✅ Manual Search → Search Anna’s Archive and download books (user selection and defined file structure)  
-✅ Recommendations → Generate book suggestions based on Readarr library (using a background tasks to scrape from Goodreads) - with options to add or dismiss suggestions including filters and sorting  
+📚 Missing List → Read from Readarr, fetch missing books and auto-download via Anna’s Archive  
+🔍 Manual Search → Search Anna’s Archive and download books (user selection and defined file structure)  
+💡 Recommendations → Generate book suggestions based on Readarr library (using a background task to scrape from Goodreads) - with options to add or dismiss suggestions including filters and sorting  
 
 ### Movies (Radarr & TMDB)  
-✅ Recommendations → Read Radarr library and suggest similar movies via TMDB (with options to add or dismiss suggestions including filters and sorting)  
-✅ Manual Search → Search via TMDB with option to add to Radarr
+🎮 Recommendations → Read Radarr library and suggest similar movies via TMDB (with options to add or dismiss suggestions including filters and sorting)  
+🔍 Manual Search → Search via TMDB with option to add to Radarr  
 
 ### TV Shows (Sonarr & TMDB)  
-✅ Recommendations → Read Sonarr library and suggest similar shows via TMDB (with options to add or dismiss suggestions including filters and sorting)  
-✅ Manual Search → Search via TMDB with option to add to Sonarr
+📺 Recommendations → Read Sonarr library and suggest similar shows via TMDB (with options to add or dismiss suggestions including filters and sorting)  
+🔍 Manual Search → Search via TMDB with option to add to Sonarr  
 
 ### Music (Lidarr, LastFM, yt-dlp & Spotify)  
-✅ Manual Search → Search Spotify for music and download via spotDL (which uses yt-dlp)  
-✅ Recommendations → Generate artist recommendations from LastFM based on Lidarr library (with options to add or dismiss suggestions including filters and sorting)  
-✅ Missing List → Read Lidarr library, fetch missing albums and download via yt-dlp  
+🎶 Manual Search → Search Spotify for music and download via spotDL (which uses yt-dlp)  
+🎤 Recommendations → Generate artist recommendations from LastFM based on Lidarr library (with options to add or dismiss suggestions including filters and sorting)  
+💀 Missing List → Read Lidarr library, fetch missing albums and download via yt-dlp  
 
 ### Audiobooks (Readarr, Spotify, AudioBookBay & LibriVox??)  
-✅ Missing List → Read from Readarr library, fetch missing audiobooks and auto-download  
-✅ Manual Search → Search Spotify and download audiobooks (user selection and defined file structure)  
-✅ Recommendations → Generate audiobook suggestions based on Readarr library - with options to add or dismiss suggestions including filters and sorting  
+🎧 Missing List → Read from Readarr library, fetch missing audiobooks and auto-download  
+🔍 Manual Search → Search Spotify and download audiobooks (user selection and defined file structure)  
+📚 Recommendations → Generate audiobook suggestions based on Readarr library - with options to add or dismiss suggestions including filters and sorting  
 
 ### Downloads (via yt-dlp)  
-✅ Direct Download Page → Input YouTube or Spotify link and download video/audio using spotDL or yt-dlp  
+💽 Direct Download Page → Input YouTube or Spotify link and download video/audio using spotDL or yt-dlp  
 
 ### Subscriptions (via spotdl and yt-dlp)  
-✅ Schedule System → Subscribe to YouTube Channels, Spotify or YouTube Playlists and download on a schedule  
+🗓️ Schedule System → Subscribe to YouTube Channels, Spotify or YouTube Playlists and download on a schedule  
 
 
 ### 🛠️ **Tech Stack Overview**  
@@ -190,8 +190,8 @@ If pre-commit hooks flag any issues, follow the suggested fixes and commit again
 A recommended development setup includes:
 
 - **VSCode** with Black formatting (line length set to 200 characters).
-- **isort** configured for organizing imports.
-- Default formatters for JavaScript, CSS, and HTML.
+- **isort** configured for organising imports.
+- Default formatters for JavaScript, CSS and HTML.
 - Python 3.12.
 
 ## Docker Compose - Preview Image with minimal Functionality
@@ -203,19 +203,19 @@ services:
     container_name: mediawolf
     environment:
       - lidarr_address=http://localhost:8686
-      - lidarr_api_key=""
+      - lidarr_api_key=yourapikey
       - readarr_address=http://localhost:8787
-      - readarr_api_key=""
+      - readarr_api_key=yourapikey
       - radarr_address=http://localhost:7878
-      - radarr_api_key=""
+      - radarr_api_key=yourapikey
       - sonarr_address=http://localhost:8989
-      - sonarr_api_key=""
-      - lastfm_api_key=""
-      - lastfm_api_secret=""
-      - tmdb_api_key=""
-      - tvdb_api_key=""
-      - spotify_client_id=""
-      - spotify_client_secret=""
+      - sonarr_api_key=yourapikey
+      - lastfm_api_key=yourapikey
+      - lastfm_api_secret=yourapikey
+      - tmdb_api_key=yourapikey
+      - tvdb_api_key=yourapikey
+      - spotify_client_id=yourclientid
+      - spotify_client_secret=yourclientsecret
     volumes:
       - /path/to/config:/config
       - /path/to/downloads:/downloads
