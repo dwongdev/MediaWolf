@@ -29,7 +29,7 @@ Thanks for your interest! 🚀
 💡 Recommendations → Generate book suggestions based on Readarr library (using a background task to scrape from Goodreads) - with options to add or dismiss suggestions including filters and sorting  
 
 ### Movies (Radarr & TMDB)  
-🎮 Recommendations → Read Radarr library and suggest similar movies via TMDB (with options to add or dismiss suggestions including filters and sorting)  
+📽 Recommendations → Read Radarr library and suggest similar movies via TMDB (with options to add or dismiss suggestions including filters and sorting)  
 🔍 Manual Search → Search via TMDB with option to add to Radarr  
 
 ### TV Shows (Sonarr & TMDB)  
@@ -53,7 +53,8 @@ Thanks for your interest! 🚀
 🗓️ Schedule System → Subscribe to YouTube Channels, Spotify or YouTube Playlists and download on a schedule  
 
 
-### 🛠️ **Tech Stack Overview**  
+
+## 🛠️ **Tech Stack Overview**  
 
 | Layer            | Technology                                             |
 |------------------|--------------------------------------------------------|
@@ -110,7 +111,8 @@ MediaWolf/
 ```
 
 
-# 📊 Project Progress Tracker
+
+## 📊 Project Progress Tracker
 
 **Books (Readarr & Anna’s Archive)**
 - [ ] Readarr Missing List Scheduled Downloader -> Similar to [BookBounty](https://github.com/TheWicklowWolf/BookBounty)
@@ -153,9 +155,11 @@ MediaWolf/
 **Settings Manager**
 - [x] Settings Loader & Saver
 
-# 📦 Local Development Setup
 
-## Docker Setup
+
+## 📦 Local Development Setup
+
+### Docker Setup
 
 To quickly get started with the project, you can use the Docker Compose file.
 
@@ -164,7 +168,7 @@ To quickly get started with the project, you can use the Docker Compose file.
 - Run `docker compose up -d`.
 - Access the application at `http://127.0.0.1:5000`.
 
-## Manual Setup
+### Manual Setup
 
 - Clone the repository.
 - Create a virtual environment and activate it (You can use `pyenv` to manage multiple Python versions easily).
@@ -172,7 +176,7 @@ To quickly get started with the project, you can use the Docker Compose file.
 - Run `export FLASK_APP=backend/main.py && flask run`.
 - Access the application at `http://127.0.0.1:5000`.
 
-## Committing Changes
+### Committing Changes
 
 Ensure you have pre-commit hooks installed by running:
 
@@ -185,7 +189,7 @@ pre-commit install
 
 If pre-commit hooks flag any issues, follow the suggested fixes and commit again.
 
-## Example Development Setup
+### Example Development Setup
 
 A recommended development setup includes:
 
@@ -194,7 +198,7 @@ A recommended development setup includes:
 - Default formatters for JavaScript, CSS and HTML.
 - Python 3.12.
 
-## Docker Compose - Preview Image with minimal Functionality
+### Docker Compose - Preview Image with minimal Functionality
 
 ```yaml
 services:
@@ -224,5 +228,5 @@ services:
     restart: unless-stopped
 ```
 
-# Discord
+## Discord
 https://discord.gg/hxXzH9Xkcx
