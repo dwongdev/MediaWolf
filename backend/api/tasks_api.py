@@ -37,7 +37,13 @@ class TasksAPI:
                     task.status = "Running"
                     self.socketio.emit("update_task", task.to_dict())
 
-                    self.tasks_manager.run_task(task_id)
+                    self.tasks_manager.scheduler.add_job(
+                        func=self.tasks_manager.run_task,
+                        trigger="date",
+                        id=f"task_{task_id}",
+                        replace_existing=True,
+                        kwargs={"task_id": task_id},
+                    )
 
                     task_list = self.tasks_manager.list_tasks()
                     self.socketio.emit("load_task_data", task_list)
